@@ -2,15 +2,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "datastructures.h"
 #include "day1.h"
 #include "helpers.h"
 
 #define COULD_NOT_OPEN_FILE 1
 
+
 // comparison function for sorting
 int comp(const void * el1, const void * el2) {
-  unsigned int l = *((unsigned int*) el1);
-  unsigned int r = *((unsigned int*) el2);
+  int l = *((int*) el1);
+  int r = *((int*) el2);
   return (l > r) - (l < r);
 }
 
@@ -18,35 +20,21 @@ int comp(const void * el1, const void * el2) {
 int day1() {
   FILE* input = load_input(1);
   if (input == NULL) return COULD_NOT_OPEN_FILE;
-  unsigned int* list1, *list2;
-  // we dynamically allocate list1 and list2 by creating
-  // a simple arraylist
-  list1 = malloc(sizeof(unsigned int));
-  list2 = malloc(sizeof(unsigned int));
-  unsigned int size, read;
-  size = read = 1;
+  vec_int list1 = MK_VEC(int), list2 = MK_VEC(int);
   unsigned int v1, v2;
   while ((fscanf(input, "%d %d\n", &v1, &v2)) != EOF) {
-    if (read >= size) {
-      size <<= 1;
-      list1 = realloc(list1, size * sizeof(unsigned int));
-      list2 = realloc(list2, size * sizeof(unsigned int));
-    }
-    list1[read] = v1;
-    list2[read] = v2;
-    read++;
+    vec_int_push(&list1, v1);
+    vec_int_push(&list2, v2);
   }
-  // resize the two arrays to not waste space
-  list1 = realloc(list1, read * sizeof(unsigned int));
-  list2 = realloc(list2, read * sizeof(unsigned int));
 
   // sort the lists and compare
-  qsort(list1, read, sizeof(unsigned int), comp);
-  qsort(list2, read, sizeof(unsigned int), comp);
+  qsort(list1.start, list1.size, sizeof(int), comp);
+  qsort(list2.start, list2.size, sizeof(int), comp);
+
 
   unsigned int diff = 0;
-  for (unsigned int i = 0; i < read; ++i) {
-    diff += abs((int)list1[i] - (int)list2[i]);
+  for (unsigned int i = 0; i < list1.size; ++i) {
+    diff += abs(list1.start[i] - list2.start[i]);
   }
 
   printf("--> Q1: The difference is \t%d\n", diff);
@@ -55,11 +43,11 @@ int day1() {
   // of course, binary search could be used, but I won't bother
 
   int64_t score = 0;
-  for (unsigned int i = 0; i < read; ++i) {
-    unsigned int to_search = list1[i];
+  for (unsigned int i = 0; i < list1.size; ++i) {
+    unsigned int to_search = list1.start[i];
     unsigned int count = 0;
-    for(unsigned int j = 0; j < read; j++)
-      count += list2[j] == to_search;
+    for(unsigned int j = 0; j < list2.size; j++)
+      count += list2.start[j] == to_search;
     score += to_search * count;
   }
   

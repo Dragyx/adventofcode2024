@@ -1,5 +1,5 @@
 FLAGS=-O3 -Wall
-FILES=src/helpers.c src/day*.c src/main.c 
+FILES=src/helpers.c src/datastructures.c src/day*.c src/main.c 
 
 
 run: all
