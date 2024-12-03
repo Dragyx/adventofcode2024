@@ -2,12 +2,16 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "datastructures.h"
 #include "day1.h"
 #include "helpers.h"
 
 #define COULD_NOT_OPEN_FILE 1
 
+
+#define T int
+#include "vec.def"
+static void* _ = vec_int_pop;
+#undef T
 
 // comparison function for sorting
 int comp(const void * el1, const void * el2) {

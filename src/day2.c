@@ -1,8 +1,16 @@
-#include "datastructures.h"
 #include "helpers.h"
 #include <stdio.h>
 #include <stdbool.h>
 
+
+#define T int
+#include "vec.def"
+// to avoid unused funtion warnings
+void* _ = vec_int_pop;
+#undef T
+#define T vec_int
+#include "vec.def"
+#undef T
 
 // checks if the report is safe. Has the option to ignore
 // an entry (for task 2)

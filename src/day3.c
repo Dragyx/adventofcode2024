@@ -6,15 +6,11 @@
 #include <stdbool.h>
 
 #include "day3.h"
-#include "datastructures.h"
 #include "helpers.h"
 
 
 #define ARRAY_SIZE(arr) (sizeof((arr)) / sizeof((arr)[0]))
 
-DEF_VEC(inst);
-DEF_VEC_POP(inst);
-DEF_VEC_PUSH(inst);
 
 regex_t inst_fmt, do_fmt, dont_fmt;
 int inst_fmt_rc, do_fmt_rc, dont_fmt_rc;
