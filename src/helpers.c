@@ -11,3 +11,4 @@ FILE* load_input(unsigned int day) {
   printf("Loading file %s\n", filename);
   return fopen(filename, "r");
 }
+

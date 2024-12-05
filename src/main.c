@@ -2,6 +2,7 @@
 #include "day2.h"
 #include "day3.h"
 #include "day4.h"
+#include "day5.h"
 #include <assert.h>
 
 int main() {
@@ -9,5 +10,6 @@ int main() {
   assert(!day2());
   assert(!day3());
   assert(!day4());
+  assert(!day5());
   
 }

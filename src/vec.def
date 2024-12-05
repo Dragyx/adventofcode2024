@@ -29,7 +29,7 @@ static int CONCAT3(vec_, T, _push)(CONCAT(vec_, T)* vec, T el) {
 
 static int CONCAT3(vec_ , T,  _pop)(CONCAT(vec_, T)* vec, T* value) { 
    if (vec->size == 0) return 1;         
-   *value = vec->start[vec->size--];     
+   *value = vec->start[--vec->size];     
    if (vec->size <= vec->capacity / 2) { 
       vec->capacity >>= 1;               
       vec->start = (T *)realloc(         
