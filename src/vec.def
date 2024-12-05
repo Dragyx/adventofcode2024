@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 
 #define CONCAT(x, y) _CONCAT(x, y)
@@ -13,6 +14,11 @@ typedef struct {
 #define MK_VEC_WITH_CAP(E, CAP) { .start = malloc(CAP * sizeof(E)), .size = 0, .capacity = CAP }
 #define MK_VEC(E) MK_VEC_WITH_CAP(E, 1)
 #define MK_VEC_ZERO(E, CAP) { .start = calloc(CAP, sizeof(E)), .size = CAP, .capacity = CAP }
+
+#define PRINT_INT_VEC(vec) for (size_t i = 0; i < vec->size; i++) { \
+   printf("%d ", vec->start[i]); \
+   if (i == vec->size - 1) printf("\n"); \
+}
 
 static int CONCAT3(vec_, T, _push)(CONCAT(vec_, T)* vec, T el) { 
    if (vec->size >= vec->capacity) {     
@@ -37,7 +43,7 @@ static int CONCAT3(vec_ , T,  _pop)(CONCAT(vec_, T)* vec, T* value) {
          vec->capacity * sizeof(T)       
       );                                 
       if (vec->start == NULL)            
-         return 1;                       
+         return 2;                       
    }                                     
    return 0;                             
 }
