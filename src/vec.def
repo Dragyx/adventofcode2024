@@ -12,7 +12,7 @@ typedef struct {
 
 #define MK_VEC_WITH_CAP(E, CAP) { .start = malloc(CAP * sizeof(E)), .size = 0, .capacity = CAP }
 #define MK_VEC(E) MK_VEC_WITH_CAP(E, 1)
-#define MK_VEC_ZERO(E, CAP) { .start = calloc(CAP, sizeof(E)), .size = 0, .capacity = CAP }
+#define MK_VEC_ZERO(E, CAP) { .start = calloc(CAP, sizeof(E)), .size = CAP, .capacity = CAP }
 
 static int CONCAT3(vec_, T, _push)(CONCAT(vec_, T)* vec, T el) { 
    if (vec->size >= vec->capacity) {     
