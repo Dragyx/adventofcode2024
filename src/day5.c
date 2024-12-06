@@ -141,6 +141,7 @@ int day5() {
   printf("--> Q2: The sum of all invalid, sorted middle pages is: %lu\n", sumt2);
   
 
+  free(rules.start);
   free(updates.start);
   free(adj.start);
   

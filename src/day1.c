@@ -10,7 +10,6 @@
 
 #define T int
 #include "vec.def"
-static void* _ = vec_int_pop;
 #undef T
 
 // comparison function for sorting
@@ -56,6 +55,9 @@ int day1() {
   }
   
   printf("--> Q2: The total score is \t%ld\n", score);
+
+  free(list1.start);
+  free(list2.start);
 
 
   return 0;

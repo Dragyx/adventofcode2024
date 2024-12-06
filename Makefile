@@ -1,4 +1,4 @@
-FLAGS=-O3 -Wall
+FLAGS=-O3 -Wall -Wno-unused-function -fsanitize=address -ggdb3
 FILES=src/helpers.c src/day*.c src/main.c 
 
 

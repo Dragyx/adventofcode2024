@@ -26,10 +26,10 @@ int day3() {
   fseek(input_f, 0, SEEK_END);
   long length = ftell(input_f);
   fseek(input_f, 0, SEEK_SET);
-  char* input = malloc(length);
+  char* input = malloc((length  + 1) * sizeof(char) );
   assert(input);
 
-  fread(input, 1, length, input_f);
+  assert(fread(input, 1, length, input_f));
   fclose(input_f);
 
   char* cur_pos = input;
@@ -48,7 +48,7 @@ int day3() {
 
 
     size_t match_size = pmatch[0].rm_eo - pmatch[0].rm_so;
-    char match[13] = { 0 };
+    char match[13] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0  };
     strncpy(match, cur_pos + pmatch[0].rm_so, match_size);
     if (!strcmp(match, "don't")) {
        enabled = false;
