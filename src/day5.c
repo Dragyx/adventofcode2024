@@ -13,16 +13,19 @@
 #undef T
 
 void modified_selection_sort(vec_int* list, vec_int* adj, int n) {
-  // this is basically selection sort (greatest to smallest), but it finds 
-  // a maximal element in regards to the (antisymmetric)
-  // "before" relation prescribed by the rules instead of the
-  // maximum value in each outer iteration
+  // this is basically selection sort (smallest to greates), but it finds 
+  // a minimal element in regards to the (antisymmetric)
+  // "before" relation (i.e. i < j <==> i must appear before j)l
+  // prescribed by the rules instead of the minimum numerical 
+  // value in each outer iteration
   size_t m = list->size;
   for (int i = 0; i < m; i++) {
+    // find an element that is allowed to be the first of all other
+    // elements in the non-sorted part [i, m) and swap it to position i
     for (int j = i; j < m; j++) {
       bool minimal = true;
       for (int k = i; k < m; k++) {
-          int u = list->start[j];
+        int u = list->start[j];
         int v = list->start[k];
         if (adj->start[v * n + u]) {
           minimal = false;
@@ -35,10 +38,7 @@ void modified_selection_sort(vec_int* list, vec_int* adj, int n) {
         list->start[j] = tmp;
         break;
       }
-
     }
-
-
   }
 }
 
