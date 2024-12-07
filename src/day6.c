@@ -87,54 +87,40 @@ bool creates_cycle(pos guard, direction dir, vec_int*  grid, int row_size) {
   pos obs = { guard.x + dir_to_delta(dir).x, 
               guard.y + dir_to_delta(dir).y };
   int height = grid->size / row_size;
-  // printf("OBSTACLE = (%d, %d)\n", obs.x, obs.y);
+
   // either the grid was visited before or there is an obstacle
   // ; either way, this can not be an additional obstacle
   if (grid->start[obs.y * row_size + obs.x] || !is_valid_pos(&guard, row_size, height))
     return false;
   
   bool cycle = false;
-  
-  // we bounce of the obstacle once
-  rot_90(&dir);
 
   // save changed values for cleanup
   vec_visited changed = MK_VEC(visited);
 
-  for(;;) {
-    pos delta = dir_to_delta(dir);
-    pos new_pos = { guard.x + delta.x, guard.y + delta.y};
-    if (!is_valid_pos(&new_pos, row_size, height)) {
-      break;
-    }
-    // check if the new position was visited
-    // yes -> cycle
-    // no -> change / advance position and remember what we changed
-    int* grid_val = &grid->start[new_pos.y * row_size + new_pos.x];
-    // visited and in the right direction as well
-    if (*grid_val > 0 && ((*grid_val) & (1 << dir))) {
-      // printf("<------------------------------------------\n");
-      // print_grid(*grid, row_size, &obs, &changed);
-      // printf("<------------ cycle at (%d, %d) = %4p, %lu\n", new_pos.x, new_pos.y, (void *)(*grid_val), changed.size);
+  while(is_valid_pos(&guard, row_size, height)) {
+    int* cur_field = &grid->start[guard.y * row_size + guard.x];
+    // mark // check for previous marking
+    if (*cur_field > 0 && ((*cur_field) & (1 << dir))) {
       cycle = true;
       break;
-    };
-    if (*grid_val == OBSTACLE) {
-      rot_90(&dir);
-      grid_val = &grid->start[guard.y * row_size + guard.x];
-      if (*grid_val > 0 && ((*grid_val) & (1 << dir))) {
-        cycle = true;
-        break;
-      }
-      *grid_val ^= 1 << dir;
+    } else {
+      *cur_field ^= 1 << dir;
       vec_visited_push(&changed, (visited){guard, dir});
-      continue;
+    };
+
+    // advance
+    pos delta = dir_to_delta(dir);
+    pos new_pos = { guard.x + delta.x, guard.y + delta.y};
+    if (!is_valid_pos(&new_pos, row_size, height)) break;
+    int* next_field = &grid->start[new_pos.y * row_size + new_pos.x];
+    
+    if (*next_field == OBSTACLE || (new_pos.x == obs.x && new_pos.y == obs.y)) {
+      rot_90(&dir);
+    } else {
+      guard = new_pos;
     }
-    if (*grid_val == UNKNOWN) {
-      *grid_val ^= 1 << dir;
-      vec_visited_push(&changed, (visited){new_pos, dir});
-    }
-    guard = new_pos;
+
   }
 
   // clean up and retorn
@@ -184,41 +170,71 @@ int day6() {
   int cycle_obstacles = 0;
   direction dir = NORTH;
   int t = 0;
-  // grid.start[guard.y + row_size + guard.x] = 0x07;
-  for(;;) {
-    vec_int grid2 = MK_VEC_ZERO(int, grid.size); 
+  while(is_valid_pos(&guard, row_size, height)) {
+    int* cur_field = &grid.start[guard.y * row_size + guard.x];
+    // mark // check for previous marking
 
-
-    memcpy(grid2.start, grid.start, grid.size * sizeof(int));
+    distinct_pos += *cur_field == UNKNOWN;
+    vec_int grid2 = MK_VEC_ZERO(int, grid.size);
+    memcpy(grid2.start, grid.start, sizeof(int) * grid.size);
     cycle_obstacles += creates_cycle(guard, dir, &grid, row_size);
-    assert(memcmp(grid.start, grid2.start, grid.size * sizeof(int)) == 0);
+    assert(!memcmp(grid.start, grid2.start, sizeof(int) * grid.size));
+
     free(grid2.start);
+
+    // this field cannot be marked in the same direction yet
+    assert(!(*cur_field > 0 && ((*cur_field) & (1 << dir))));
+    
+    *cur_field ^= 1 << dir;
+
+    // advance
     pos delta = dir_to_delta(dir);
     pos new_pos = { guard.x + delta.x, guard.y + delta.y};
-    if (!is_valid_pos(&new_pos, row_size, height)) {
-      break;
-    }
-    
-    int* grid_val = &grid.start[new_pos.y * row_size + new_pos.x];
-    // we hit an obstacle
-    if (*grid_val == OBSTACLE) {
+    if (!is_valid_pos(&new_pos, row_size, height)) break;
+
+    int* next_field = &grid.start[new_pos.y * row_size + new_pos.x];    
+    if (*next_field == OBSTACLE) {
       rot_90(&dir);
-      grid_val = &grid.start[guard.y * row_size + guard.x];
-      *grid_val ^= 1 << dir;
-      continue;
+    } else {
+      guard = new_pos;
     }
-
-    if (*grid_val == UNKNOWN) {
-      *grid_val ^= 1 << dir;
-      distinct_pos++;
-    }
-    // printf("||||||||||||||||||||\n");
-    // print_grid(grid, row_size);
-
-
-    guard = new_pos;
-    t++;
   }
+  // print_grid(grid, row_size, NULL, NULL);
+  // // grid.start[guard.y + row_size + guard.x] = 0x07;
+  // for(;;) {
+  //   vec_int grid2 = MK_VEC_ZERO(int, grid.size); 
+
+
+  //   memcpy(grid2.start, grid.start, grid.size * sizeof(int));
+  //   cycle_obstacles += creates_cycle(guard, dir, &grid, row_size);
+  //   assert(memcmp(grid.start, grid2.start, grid.size * sizeof(int)) == 0);
+  //   free(grid2.start);
+  //   pos delta = dir_to_delta(dir);
+  //   pos new_pos = { guard.x + delta.x, guard.y + delta.y};
+  //   if (!is_valid_pos(&new_pos, row_size, height)) {
+  //     break;
+  //   }
+    
+  //   int* grid_val = &grid.start[new_pos.y * row_size + new_pos.x];
+  //   // we hit an obstacle
+  //   if (*grid_val == OBSTACLE) {
+  //     rot_90(&dir);
+  //     grid_val = &grid.start[guard.y * row_size + guard.x];
+  //     *grid_val ^= 1 << dir;
+  //     continue;
+  //   }
+
+  //   if (*grid_val == UNKNOWN) {
+  //     *grid_val ^= 1 << dir;
+  //     distinct_pos++;
+  //   }
+  //   // printf("||||||||||||||||||||\n");
+  //   // print_grid(grid, row_size);
+
+
+  //   guard = new_pos;
+  //   t++;
+  // }
 
   printf("---> Q1: Number of distinct positions: %d\n", distinct_pos);
   printf("---> Q1: Number of possible obstacles: %d\n", cycle_obstacles);
