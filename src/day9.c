@@ -139,11 +139,6 @@ int day9() {
 
   printf("--> Q1: The checksum is: %ld\n", checksum);
 
-  // print_disk(&disk2);
-  // printf("USED: \n");
-  // print_node(ublocks);
-  // printf("free: \n");
-  // print_node(fblocks);
 
   // compact disk2 
   
@@ -155,17 +150,12 @@ int day9() {
 
     if (free_block != NULL && free_block->pos < to_move->pos) {
       int id = disk2.start[to_move->pos];
-      // printf("%d: %lu, %lu\n", id, to_move->size, free_block->pos);
       for (int i = 0; i < to_move->size; i++) {
         disk2.start[free_block->pos + i] = id;
         disk2.start[to_move->pos + i] = -1;
       }
       free_block->size -= to_move->size;
       free_block->pos += to_move->size;
-      // print_node(fblocks);
-      // print_disk(&disk2);
-      // printf("Trying to compact %d...\n", id);
-      // print_disk(&disk2);
     }
 
   }
