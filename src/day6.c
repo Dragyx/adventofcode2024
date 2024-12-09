@@ -169,7 +169,6 @@ int day6() {
   int distinct_pos = 0;
   int cycle_obstacles = 0;
   direction dir = NORTH;
-  int t = 0;
   while(is_valid_pos(&guard, row_size, height)) {
     int* cur_field = &grid.start[guard.y * row_size + guard.x];
     // mark // check for previous marking
@@ -239,19 +238,6 @@ int day6() {
   printf("---> Q1: Number of distinct positions: %d\n", distinct_pos);
   printf("---> Q1: Number of possible obstacles: %d\n", cycle_obstacles);
 
-  for (int i = 0; i < height; i++) {
-    for (int j = 0; j < row_size; j++) {
-      int val = grid.start[i * row_size + j];
-      // assert(
-      //   val == UNKNOWN ||
-      //   val == OBSTACLE; // ||
-      //   // val == VIS_E ||
-      //   // val == VIS_S ||
-      //   // val == VIS_W ||
-      //   // val == VIS_N 
-      // );
-    }
-  }
 
 
 
