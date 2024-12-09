@@ -111,7 +111,7 @@ int day8() {
   for (int i = 0; i < grid.size; i++)
     assert(grid.start[i] == 0);
 
-  int antinode_count = 0, antinode_count_t2;
+  int antinode_count = 0;
   // search for antinodes
   for (size_t i = 0; i < used_frequencies.size; i++) {
     u_char f = used_frequencies.start[i];
@@ -134,7 +134,7 @@ int day8() {
     }
 
   }
-  printf("---> Q1: The number of locations with antinodes is %d\n", antinode_count);
+  printf("--> Q1: The number of locations with antinodes is %d\n", antinode_count);
 
   // reset array
   for (int i = 0; i < grid.size; i++)
@@ -177,7 +177,7 @@ int day8() {
     }
 
   }
-  printf("---> Q2: The number of new antinodes is %d\n", antinode_count2);
+  printf("--> Q2: The number of new antinodes is %d\n", antinode_count2);
   
 
 

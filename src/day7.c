@@ -103,8 +103,8 @@ int day7() {
     values.size = 0;
   }
 
-  printf("---> Q1: The sum of numbers that can be produced is: %ld\n", result);
-  printf("---> Q2: The sum of numbers that can be produced is: %ld\n", result_t2);
+  printf("--> Q1: The sum of numbers that can be produced is: %ld\n", result);
+  printf("--> Q2: The sum of numbers that can be produced is: %ld\n", result_t2);
   
 
   free(values.start);

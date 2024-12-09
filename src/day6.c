@@ -235,8 +235,8 @@ int day6() {
   //   t++;
   // }
 
-  printf("---> Q1: Number of distinct positions: %d\n", distinct_pos);
-  printf("---> Q1: Number of possible obstacles: %d\n", cycle_obstacles);
+  printf("--> Q1: Number of distinct positions: %d\n", distinct_pos);
+  printf("--> Q1: Number of possible obstacles: %d\n", cycle_obstacles);
 
 
 
