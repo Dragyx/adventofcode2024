@@ -1,15 +1,14 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include  "helpers.h"
 
 #define T int
-#include "vec.def"
+#include "templates/vec.def"
 #undef T
 
 #define T vec_int
-#include "vec.def"
+#include "templates/vec.def"
 #undef T
 
 void modified_selection_sort(vec_int* list, vec_int* adj, int n) {
@@ -137,8 +136,8 @@ int day5() {
   }
 
 
-  printf("--> Q1: The sum of all middle pages is: %lu\n", sum);
-  printf("--> Q2: The sum of all invalid, sorted middle pages is: %lu\n", sumt2);
+  panswer(1, "The sum of all middle pages is: ", sum);
+  panswer(2, "The sum of all invalid, sorted middle pages is: ", sumt2);
   
 
   free(rules.start);

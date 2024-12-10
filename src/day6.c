@@ -6,7 +6,7 @@
 #include "day6.h"
 
 #define T int
-#include "vec.def"
+#include "templates/vec.def"
 #undef T
 
 typedef struct {
@@ -15,7 +15,7 @@ typedef struct {
 } visited;
 
 #define T visited
-#include "vec.def"
+#include "templates/vec.def"
 #undef T
 
 
@@ -198,49 +198,9 @@ int day6() {
       guard = new_pos;
     }
   }
-  // print_grid(grid, row_size, NULL, NULL);
-  // // grid.start[guard.y + row_size + guard.x] = 0x07;
-  // for(;;) {
-  //   vec_int grid2 = MK_VEC_ZERO(int, grid.size); 
 
-
-  //   memcpy(grid2.start, grid.start, grid.size * sizeof(int));
-  //   cycle_obstacles += creates_cycle(guard, dir, &grid, row_size);
-  //   assert(memcmp(grid.start, grid2.start, grid.size * sizeof(int)) == 0);
-  //   free(grid2.start);
-  //   pos delta = dir_to_delta(dir);
-  //   pos new_pos = { guard.x + delta.x, guard.y + delta.y};
-  //   if (!is_valid_pos(&new_pos, row_size, height)) {
-  //     break;
-  //   }
-    
-  //   int* grid_val = &grid.start[new_pos.y * row_size + new_pos.x];
-  //   // we hit an obstacle
-  //   if (*grid_val == OBSTACLE) {
-  //     rot_90(&dir);
-  //     grid_val = &grid.start[guard.y * row_size + guard.x];
-  //     *grid_val ^= 1 << dir;
-  //     continue;
-  //   }
-
-  //   if (*grid_val == UNKNOWN) {
-  //     *grid_val ^= 1 << dir;
-  //     distinct_pos++;
-  //   }
-  //   // printf("||||||||||||||||||||\n");
-  //   // print_grid(grid, row_size);
-
-
-  //   guard = new_pos;
-  //   t++;
-  // }
-
-  printf("--> Q1: Number of distinct positions: %d\n", distinct_pos);
-  printf("--> Q1: Number of possible obstacles: %d\n", cycle_obstacles);
-
-
-
-
+  panswer(1, "Number of distinct positions: ", distinct_pos);
+  panswer(2, "Number of possible obstacles: ", cycle_obstacles);
 
   // we now check for rectangular regions
 

@@ -69,8 +69,8 @@ int day3() {
     cur_pos += pmatch[0].rm_eo;
   }
 
-  printf("--> Q1: Sum of muls: %d\n", sum);
-  printf("--> Q2: Sum of muls (enable + disable): %d\n", sum_t2);
+  panswer(1, "Sum of muls: ", sum);
+  panswer(2, "Sum of muls (enable + disable): ", sum_t2);
   
 
   free(input);

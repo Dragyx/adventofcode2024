@@ -9,7 +9,7 @@
 
 
 #define T int
-#include "vec.def"
+#include "templates/vec.def"
 #undef T
 
 // comparison function for sorting
@@ -40,7 +40,7 @@ int day1() {
     diff += abs(list1.start[i] - list2.start[i]);
   }
 
-  printf("--> Q1: The difference is \t%d\n", diff);
+  panswer(1, "The difference is", diff);
 
   // we use a very basic O(n^2) way to count the occurences for all values in list1
   // of course, binary search could be used, but I won't bother
@@ -54,7 +54,7 @@ int day1() {
     score += to_search * count;
   }
   
-  printf("--> Q2: The total score is \t%ld\n", score);
+  panswer(2, "The total score is", score);
 
   free(list1.start);
   free(list2.start);

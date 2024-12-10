@@ -4,12 +4,10 @@
 
 
 #define T int
-#include "vec.def"
-// to avoid unused funtion warnings
-void* _ = vec_int_pop;
+#include "templates/vec.def"
 #undef T
 #define T vec_int
-#include "vec.def"
+#include "templates/vec.def"
 #undef T
 
 // checks if the report is safe. Has the option to ignore
@@ -78,8 +76,8 @@ int day2() {
     }
   }
 
-  printf("--> Q1: Number of safe reports: %d\n", count_task1);
-  printf("--> Q2: Number of safe reports: %d\n", count_task2);
+  panswer(1, "Number of safe reports: ", count_task1);
+  panswer(2, "Number of safe reports: ", count_task2);
 
   // cleanup
   vec_int report;

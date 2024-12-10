@@ -7,11 +7,11 @@
 
 
 #define T int
-#include "vec.def"
+#include "templates/vec.def"
 #undef T
 
 #define T vec_int
-#include "vec.def"
+#include "templates/vec.def"
 #undef T
 
 int read_input_line(FILE* input_f, vec_int* values, long* target) {
@@ -103,8 +103,8 @@ int day7() {
     values.size = 0;
   }
 
-  printf("--> Q1: The sum of numbers that can be produced is: %ld\n", result);
-  printf("--> Q2: The sum of numbers that can be produced is: %ld\n", result_t2);
+  panswer(1, "The sum of numbers that can be produced is: ", result);
+  panswer(2, "The sum of numbers that can be produced is: ", result_t2);
   
 
   free(values.start);

@@ -5,7 +5,7 @@
 #include "day9.h"
 
 #define T int
-#include "vec.def"
+#include "templates/vec.def"
 #undef T
 
 
@@ -137,7 +137,7 @@ int day9() {
     checksum += (disk.start[i] != -1) * i * disk.start[i];
 
 
-  printf("--> Q1: The checksum is: %ld\n", checksum);
+ panswer(1, "The checksum is: ", checksum);
 
 
   // compact disk2 
@@ -166,7 +166,7 @@ int day9() {
     checksum += (disk2.start[i] != -1) * i * disk2.start[i];
 
   
-  printf("--> Q2: The checksum is: %ld\n", checksum);
+  panswer(2, "The checksum is: ", checksum);
   // print_disk(&disk2);
   
 

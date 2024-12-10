@@ -8,11 +8,11 @@
 #include "day8.h"
 
 #define T u_char
-#include "vec.def"
+#include "templates/vec.def"
 #undef T
 
 #define T pos_t
-#include "vec.def"
+#include "templates/vec.def"
 #undef T
 
 
@@ -134,7 +134,6 @@ int day8() {
     }
 
   }
-  printf("--> Q1: The number of locations with antinodes is %d\n", antinode_count);
 
   // reset array
   for (int i = 0; i < grid.size; i++)
@@ -177,7 +176,9 @@ int day8() {
     }
 
   }
-  printf("--> Q2: The number of new antinodes is %d\n", antinode_count2);
+
+  panswer(1, "The number of locations with antinodes is ", antinode_count);
+  panswer(2, "The number of new antinodes is ", antinode_count2);
   
 
 

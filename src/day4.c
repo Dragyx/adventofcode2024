@@ -7,7 +7,7 @@
 #include <string.h>
 
 #define T char
-#include "vec.def"
+#include "templates/vec.def"
 #undef T
 
 typedef struct {
@@ -135,8 +135,8 @@ int day4() {
   }
 
   
-  printf("--> Q1: The number of occurences of XMAS is: \t%lu\n", sum);
-  printf("--> Q2: The number of occurences of an X of MAS is: %lu\n", sum_2);
+  panswer(1, "The number of occurences of XMAS is: ", sum);
+  panswer(2, "The number of occurences of an X of MAS is: ", sum_2);
   free(map.inner.start);
 
   return 0;
