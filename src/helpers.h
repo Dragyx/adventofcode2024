@@ -5,6 +5,10 @@
 // loads the inputs file from the inputs/ directory
 FILE* load_input(unsigned int day);
 
+// print output of question q
+void panswer(int q, char* s, long answer);
+
+
 // https://stackoverflow.com/questions/3437404/min-and-max-in-c
 #define max(a,b) \
    ({ __typeof__ (a) _a = (a); \
