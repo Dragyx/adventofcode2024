@@ -1,7 +1,6 @@
 #include "day11.h"
 #include "helpers.h"
 #include <assert.h>
-#include <stdint.h>
 #include <stdbool.h>
 #include <stdio.h>
 
@@ -57,10 +56,14 @@ bool shift_left_logical(ultralong* x, unsigned int delta) {
   return old_value == 0;
 }
 
-ultralong split(ultralong* x, unsigned int digits);
+ultralong from_ulong(unsigned long x) {
+  ultralong a = {0};
+  a.l[ULTRALONG_SIZE - 1] = x;
+  return a;
+}
 
 
-__uint128_t count_stones(__uint128_t n, int depth, int maxdepth) {
+ultralong count_stones(ultralong n, int depth, int maxdepth) {
   if (depth >= maxdepth) {
     // printf("%ld ", n);
     return 1; 
@@ -68,7 +71,7 @@ __uint128_t count_stones(__uint128_t n, int depth, int maxdepth) {
   depth++;
   if (n == 0) return count_stones(1, depth, maxdepth);
   int digits = 0, ncopy = n;
-  __uint128_t mask = 1;
+  ultralong mask = 1;
   do  {
     digits++;
     ncopy /= 10;
@@ -82,7 +85,7 @@ __uint128_t count_stones(__uint128_t n, int depth, int maxdepth) {
     
   }
   if (2024LU * n <= n) { //overflow
-    printf("BEFORE: %llx AFTER: %llx\n", n, ((__uint128_t)2024LU) * n);
+    printf("BEFORE: %llx AFTER: %llx\n", n, ((ultralong)2024LU) * n);
   }
   return count_stones(2024U * n, depth, maxdepth);
 }
