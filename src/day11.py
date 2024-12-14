@@ -41,8 +41,6 @@ print(numbers)
 
 sumt1 = sum(map(lambda n: count_stones(n, 0, 25, {}), numbers))
 print("Q1: The sum is", sumt1)
-sumt1 = sum(map(lambda n: count_stones(n, 0, 25, {}), numbers))
-print("Q1: The sum is", sumt1)
 
 sumt2 = sum(map(lambda n: count_stones(n, 0, 75, {}), numbers))
 print("Q2: The sum is", sumt2)
