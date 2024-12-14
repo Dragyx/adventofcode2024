@@ -1,4 +1,5 @@
 #include "day1.h"
+#include "day11.h"
 #include "day2.h"
 #include "day3.h"
 #include "day4.h"
@@ -16,14 +17,22 @@
 long vec_resize_count = 0;
 size_t total_cycle_count = 0;
 
+const unsigned PERF_FLAG = (1 << 30) + 1; 
+
 
 // Function to read the Time Stamp Counter
 static inline size_t rdtsc()
 {
   unsigned int lo, hi;
+  // __asm__ __volatile__(
+  //     "rdpmc"
+  //     : "=a"(lo), "=d"(hi) // Outputs: low and high bits of the TSC
+  //     : "c"(PERF_FLAG)
+  // );
   __asm__ __volatile__(
       "rdtsc"
       : "=a"(lo), "=d"(hi) // Outputs: low and high bits of the TSC
+      // : "c"(PERF_FLAG)
   );
   return ((size_t)hi << 32) | lo;
 }
@@ -35,7 +44,7 @@ void execute_task(int (*f)(void)) {
   rc = f(); 
   size_t t_after = rdtsc();
   size_t time = t_after - t_before; 
-  printf(C_YELLOW "TOOK: %lu = %.2e cycles\n\n" C_RESET, time, (double)time);
+  printf(C_YELLOW "TOOK: %10lu = %.2e cycles\n\n" C_RESET, time, (double)time);
   total_cycle_count += time;
 
   assert(!rc);
@@ -53,6 +62,7 @@ int main() {
   execute_task(day8);
   execute_task(day9);
   execute_task(day10);
+  execute_task(day11);
   
   printf(C_MAGENTA "RESIZES: %ld\n", vec_resize_count);
   printf("CYCLES:  %lu = %.2e \n" C_RESET, total_cycle_count, (double)total_cycle_count);
