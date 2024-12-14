@@ -1,5 +1,4 @@
 #include "day1.h"
-#include "day11.h"
 #include "day2.h"
 #include "day3.h"
 #include "day4.h"
@@ -62,7 +61,6 @@ int main() {
   execute_task(day8);
   execute_task(day9);
   execute_task(day10);
-  execute_task(day11);
   
   printf(C_MAGENTA "RESIZES: %ld\n", vec_resize_count);
   printf("CYCLES:  %lu = %.2e \n" C_RESET, total_cycle_count, (double)total_cycle_count);
