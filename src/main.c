@@ -8,6 +8,7 @@
 #include "day8.h"
 #include "day9.h"
 #include "day10.h"
+#include "day12.h"
 #include "colors.h"
 #include <assert.h>
 
@@ -61,6 +62,7 @@ int main() {
   execute_task(day8);
   execute_task(day9);
   execute_task(day10);
+  execute_task(day12);
   
   printf(C_MAGENTA "RESIZES: %ld\n", vec_resize_count);
   printf("CYCLES:  %lu = %.2e \n" C_RESET, total_cycle_count, (double)total_cycle_count);
