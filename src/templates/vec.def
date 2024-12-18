@@ -26,6 +26,7 @@ static int CONCAT3(vec_, T, _push)(CONCAT(vec_, T)* vec, T el) {
    if (vec->size >= vec->capacity) {     
       vec->capacity <<= 1;               
       vec_resize_count++;
+      // printf("--> Resizing to %lu\n", vec->capacity);
       vec->start = (T *)realloc(         
          vec->start,                     
          sizeof(T) * vec->capacity       

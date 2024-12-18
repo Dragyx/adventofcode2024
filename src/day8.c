@@ -5,20 +5,21 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "common.h"
 #include "day8.h"
 
 #define T u_char
 #include "templates/vec.def"
 #undef T
 
-#define T pos_t
+#define T pos
 #include "templates/vec.def"
 #undef T
 
 
 int read_input(
                FILE* f, 
-               vec_pos_t antennas[128], 
+               vec_pos antennas[128], 
                vec_u_char *used_frequencies, 
                vec_u_char* grid,
                size_t *w, 
@@ -40,7 +41,7 @@ int read_input(
         if (antennas[(size_t)c].size == 0) {
           vec_u_char_push(used_frequencies, c);
         }
-        vec_pos_t_push(&antennas[(size_t)c], (pos_t){row_size ? (values_read - 1) / row_size : 0, row_size ? (values_read - 1) % row_size: values_read - 1});
+        vec_pos_push(&antennas[(size_t)c], (pos){row_size ? (values_read - 1) / row_size : 0, row_size ? (values_read - 1) % row_size: values_read - 1});
       }
       i++;
     }
@@ -53,16 +54,16 @@ int read_input(
   return 0;
 }
 
-__always_inline bool in_bounds(pos_t p, size_t w, size_t h) {
+__always_inline bool in_bounds(pos p, size_t w, size_t h) {
   return (p.i >= 0 && p.i < h && p.j >= 0 && p.j < w); 
 }
 
-void print_antennas(vec_pos_t antennas[128]) {
+void print_antennas(vec_pos antennas[128]) {
   for (u_char c = 0; c < 128; c++) {
     if (antennas[c].size != 0) {
       printf("%c: ", c);
       for (int i = 0; i < antennas[c].size; i++) {
-        pos_t p = antennas[c].start[i];
+        pos p = antennas[c].start[i];
         printf("(%2d, %2d) ", p.i, p.j);
       }
       printf("\n");
@@ -87,11 +88,11 @@ int day8() {
   // for every frequency, we save the locations on the map.
   //  (Yes, what I really want is a hashmap, but I'm too lazy
   //   to implement one)
-  // 128, because ASCII is 7 bit (pos_titive range of unsigned char)
-  vec_pos_t antennas[128];  
+  // 128, because ASCII is 7 bit (positive range of unsigned char)
+  vec_pos antennas[128];  
 
   for (u_char c = 0; c < 128; c++)
-    antennas[c] = (vec_pos_t)MK_VEC(pos_t);
+    antennas[c] = (vec_pos)MK_VEC(pos);
 
   // this array contains all frequencies that are used on the map
   // (=> the indices of grid that contain a non-empty vec)
@@ -115,13 +116,13 @@ int day8() {
   // search for antinodes
   for (size_t i = 0; i < used_frequencies.size; i++) {
     u_char f = used_frequencies.start[i];
-    vec_pos_t* locations = &antennas[f];
+    vec_pos* locations = &antennas[f];
     for (int k = 0; k < locations->size; k++) {
       for (int l = 0; l < locations->size; l++) {
         if (k == l) continue;
-        pos_t p1 = locations->start[k];
-        pos_t p2 = locations->start[l];
-        pos_t anode = {
+        pos p1 = locations->start[k];
+        pos p2 = locations->start[l];
+        pos anode = {
           p1.i + (p1.i - p2.i),
           p1.j + (p1.j - p2.j),
         };
@@ -144,21 +145,21 @@ int day8() {
   // search for antinodes
   for (size_t i = 0; i < used_frequencies.size; i++) {
     u_char f = used_frequencies.start[i];
-    vec_pos_t* locations = &antennas[f];
+    vec_pos* locations = &antennas[f];
     for (int k = 0; k < locations->size; k++) {
       for (int l = 0; l < locations->size; l++) {
         if (k == l) continue;
-        pos_t p1 = locations->start[k];
-        pos_t p2 = locations->start[l];
+        pos p1 = locations->start[k];
+        pos p2 = locations->start[l];
         if (f == 'c') printf("::: Starting walk at (%d, %d) - (%d, %d)\n", p1.i, p1.j, p2.i, p2.j);
         int point_gcd = gcd(abs(p1.i - p2.i), abs(p1.j - p2.j));
-        pos_t delta = {
+        pos delta = {
           (p1.i - p2.i) / point_gcd, 
           (p1.j - p2.j) / point_gcd,
         };
 
         for (int dir = -1; dir <= 1; dir += 2) {
-          pos_t anode = {p1.i, p1.j};
+          pos anode = {p1.i, p1.j};
           while (in_bounds(anode, w, h)) {
             if (f == 'c') {
               printf("(%d, %d) -> \n", anode.i, anode.j);

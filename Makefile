@@ -1,11 +1,11 @@
-FLAGS=-O3 -Wall -Wno-unused-function -fsanitize=address -ggdb3
-FILES=src/helpers.c src/day*.c src/main.c 
+FLAGS=-O3 -Wall -march=native -Wno-unused-function -fsanitize=address -ggdb3
+FILES=src/helpers.c src/day*.c src/main.c src/common.c 
 
 
 run: all
 	./aoc
 
-all:
+all: $(FILES)
 	gcc $(FLAGS) -o aoc $(FILES)
 
 clean:

@@ -3,10 +3,6 @@
 
 int day8();
 
-typedef struct {
-  int i, j;
-} pos_t;
-
 typedef enum {
   UNDEF = -1,
   EMPTY = 0,

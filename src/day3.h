@@ -5,8 +5,8 @@
 #include <stdint.h>
 int day3();
 
-typedef struct {
-  int8_t l, r;
-} inst;
+// typedef struct {
+//   int8_t l, r;
+// } inst;
 
 #endif

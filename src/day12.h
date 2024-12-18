@@ -6,7 +6,7 @@
 int day12();
 
 typedef struct {
-  unsigned int perimeter, area;
+  unsigned int perimeter, area, sides;
 } plot_data;
 
 typedef struct {
